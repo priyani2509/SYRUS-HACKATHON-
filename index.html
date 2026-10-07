@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ImpactRadar — Opportunity Discovery</title>
+<style>
+:root{--bg:#07100e;--panel:#0d1916;--panel2:#11221d;--line:#1c342d;--text:#eef8f3;--muted:#8fa89f;--green:#72e6ad;--green2:#35c98a;--yellow:#f6d778;--red:#ff8e8e;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 75% -10%,#153c2d 0,#07100e 38%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,select{font:inherit}.app{display:flex;min-height:100vh}.sidebar{width:240px;border-right:1px solid var(--line);padding:24px 16px;position:fixed;top:0;bottom:0;background:rgba(7,16,14,.92);backdrop-filter:blur(14px)}
+.brand{display:flex;gap:10px;align-items:center;padding:4px 8px 28px}.logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--green),#2b8d68);display:grid;place-items:center;color:#06110c;font-weight:900}.brand b{font-size:18px}.brand span{display:block;color:var(--muted);font-size:10px;letter-spacing:1.5px}
+.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;color:#a9beb6;text-align:left;padding:12px 13px;border-radius:10px;cursor:pointer}.nav button.active,.nav button:hover{background:#11261f;color:var(--white)}.nav button span{margin-right:10px}
+.side-note{position:absolute;bottom:24px;left:16px;right:16px;padding:14px;border:1px solid var(--line);background:#0b1714;border-radius:12px;color:var(--muted);font-size:12px;line-height:1.5}.side-note strong{color:var(--green)}
+main{margin-left:240px;width:calc(100% - 240px);padding:28px 34px 60px;max-width:1500px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}.eyebrow{font-size:11px;color:var(--green);letter-spacing:2px;font-weight:700}.title{font-size:32px;margin:5px 0 3px;letter-spacing:-1px}.subtitle{color:var(--muted);font-size:14px}.profile{border:1px solid var(--line);background:#0d1a17;border-radius:999px;padding:8px 13px;color:#cce0d8}
+.hero{display:grid;grid-template-columns:1.7fr .9fr;gap:16px;margin-bottom:18px}.hero-card,.stat{border:1px solid var(--line);background:linear-gradient(145deg,#0e211b,#0a1512);border-radius:18px}.hero-card{padding:24px}.hero-card h2{font-size:26px;margin:4px 0 8px}.hero-card p{color:var(--muted);max-width:680px;line-height:1.6}.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:17px}.chip{padding:6px 10px;border-radius:999px;background:#10251e;border:1px solid #204437;color:#b9e8d4;font-size:11px}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{padding:18px}.stat b{font-size:25px}.stat small{display:block;color:var(--muted);margin-top:4px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.search{flex:1;min-width:230px}.search input,.toolbar select{width:100%;background:#0c1916;border:1px solid var(--line);color:var(--text);border-radius:10px;padding:12px 13px;outline:none}.search input:focus,.toolbar select:focus{border-color:#3b8068}.filter{min-width:145px}
+.layout{display:grid;grid-template-columns:1fr 310px;gap:18px}.feed{display:grid;gap:12px}.card{background:#0c1815;border:1px solid var(--line);border-radius:15px;padding:18px;transition:.18s}.card:hover{border-color:#2c5849;transform:translateY(-1px)}.cardtop{display:flex;justify-content:space-between;gap:15px}.type{font-size:10px;letter-spacing:1.2px;color:var(--green);font-weight:800}.card h3{font-size:18px;margin:6px 0}.org{color:#b1c4bd;font-size:12px}.score{min-width:64px;text-align:center;border:1px solid #24533f;background:#10291f;border-radius:10px;padding:7px 8px;color:var(--green);font-weight:800}.score small{display:block;color:#78968a;font-size:8px;font-weight:500}.meta{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0;color:#a5bbb3;font-size:11px}.meta span{padding:5px 8px;background:#101f1b;border-radius:7px}.reason{font-size:12px;color:#a9bdb6;line-height:1.5;border-left:2px solid #2e7459;padding-left:9px}.actions{display:flex;gap:8px;margin-top:15px}.btn{border:1px solid var(--line);background:#10201c;color:#cfe0da;border-radius:8px;padding:8px 11px;cursor:pointer;font-size:11px}.btn.primary{background:var(--green2);border-color:var(--green2);color:#06110c;font-weight:800}.btn.saved{border-color:#477e69;color:var(--green)}
+.panel{border:1px solid var(--line);background:#0c1815;border-radius:15px;padding:17px;height:max-content;position:sticky;top:20px}.panel h3{margin:0 0 12px;font-size:14px}.notice{padding:12px;border-radius:10px;background:#101f1b;margin-bottom:9px;font-size:12px;line-height:1.45}.notice b{display:block;margin-bottom:4px}.green{color:var(--green)}.yellow{color:var(--yellow)}.muted{color:var(--muted)}.empty{padding:35px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:15px}
+.section{display:none}.section.active{display:block}.sdg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.sdg{padding:20px;border:1px solid var(--line);background:#0c1815;border-radius:15px}.sdg .num{font-size:28px;color:var(--green);font-weight:900}.sdg h3{margin:8px 0}.sdg p{color:var(--muted);font-size:13px;line-height:1.6}
+.toast{position:fixed;right:25px;bottom:25px;background:#d9f9e9;color:#06110c;padding:12px 15px;border-radius:10px;font-weight:700;box-shadow:0 15px 40px #0008;display:none}.toast.show{display:block}
+@media(max-width:950px){.sidebar{width:72px}.brand div:not(.logo),.nav button em,.side-note{display:none}.nav button{text-align:center}.sidebar{padding:20px 9px}main{margin-left:72px;width:calc(100% - 72px);padding:22px}.hero,.layout{grid-template-columns:1fr}.panel{position:static}.sdg-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.top{align-items:flex-start}.profile{display:none}.stats{grid-template-columns:1fr 1fr}.title{font-size:25px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="logo">IR</div><div><b>ImpactRadar</b><span>EDUCATION · AI · IMPACT</span></div></div>
+  <nav class="nav">
+    <button class="active" data-page="discover"><span>⌕</span><em>Discover</em></button>
+    <button data-page="saved"><span>♡</span><em>Saved</em></button>
+    <button data-page="alerts"><span>◉</span><em>Notifications</em></button>
+    <button data-page="sdg"><span>✦</span><em>SDG Impact</em></button>
+  </nav>
+  <div class="side-note"><strong>AI guardrail</strong><br>Missing requirements are shown as “Not specified”. ImpactRadar never invents eligibility.</div>
+</aside>
+
+<main>
+<section id="discover" class="section active">
+<div class="top"><div><div class="eyebrow">PERSONALIZED OPPORTUNITY RADAR</div><div class="title">Find opportunities that fit you.</div><div class="subtitle">One feed for hackathons, competitions, workshops and collaborative events.</div></div><div class="profile">Student profile · 78% complete</div></div>
+
+<div class="hero">
+  <div class="hero-card"><div class="eyebrow">AGENT STATUS · LIVE</div><h2>Your next practical learning opportunity</h2><p>The recommendation agent combines eligibility and relevance, explains every match, and keeps event details under monitoring.</p><div class="chips"><span class="chip">Beginner friendly</span><span class="chip">Free</span><span class="chip">Remote</span><span class="chip">Sustainability</span></div></div>
+  <div class="stats"><div class="stat"><b id="eventCount">6</b><small>opportunities found</small></div><div class="stat"><b>3</b><small>sources checked</small></div><div class="stat"><b>4</b><small>strong matches</small></div><div class="stat"><b>2</b><small>changes detected</small></div></div>
+</div>
+
+<div class="toolbar">
+  <div class="search"><input id="search" placeholder="Search skills, events, themes, organizations…"></div>
+  <div class="filter"><select id="type"><option value="">All types</option><option>Hackathon</option><option>Workshop</option><option>Competition</option><option>Collaboration</option></select></div>
+  <div class="filter"><select id="mode"><option value="">Any mode</option><option>Remote</option><option>Hybrid</option><option>In-person</option></select></div>
+  <div class="filter"><select id="cost"><option value="">Any cost</option><option>Free</option><option>Paid</option></select></div>
+</div>
+<div class="layout"><div id="feed" class="feed"></div>
+<aside class="panel"><h3>Agent reasoning</h3>
+  <div class="notice"><b class="green">Eligibility ≠ relevance</b> Eligibility is checked separately, then relevant opportunities are ranked.</div>
+  <div class="notice"><b>Why this feed?</b> Skills, interests, availability, beginner level, cost and sustainability preferences.</div>
+  <div class="notice"><b class="yellow">Data quality</b> Every card exposes source context and verification status.</div>
+  <button class="btn primary" style="width:100%" onclick="toast('Profile matching refreshed')">Refresh recommendations</button>
+</aside></div>
+</section>
+
+<section id="saved" class="section">
+<div class="top"><div><div class="eyebrow">YOUR SHORTLIST</div><div class="title">Saved opportunities</div><div class="subtitle">Keep the events you want to revisit.</div></div></div>
+<div id="savedFeed" class="feed"></div>
+</section>
+
+<section id="alerts" class="section">
+<div class="top"><div><div class="eyebrow">CHANGE MONITORING</div><div class="title">Notifications</div><div class="subtitle">Important changes found during scheduled refreshes.</div></div></div>
+<div class="feed">
+<div class="card"><div class="type">DEADLINE CHANGE</div><h3>GreenTech Buildathon</h3><p class="muted">Application deadline moved from 18 Oct to 21 Oct. Source re-verified today.</p><div class="actions"><button class="btn primary" onclick="toast('Opened event')">View event</button><button class="btn" onclick="toast('Notification dismissed')">Dismiss</button></div></div>
+<div class="card"><div class="type">REQUIREMENT CHANGE</div><h3>Climate Data Sprint</h3><p class="muted">Team-size requirement is now “2–4 members”. Eligibility was re-checked.</p><div class="actions"><button class="btn primary" onclick="toast('Opened event')">View event</button></div></div>
+</div>
+</section>
+
+<section id="sdg" class="section">
+<div class="top"><div><div class="eyebrow">IMPACT LENS</div><div class="title">SDG mapping</div><div class="subtitle">ImpactRadar’s opportunity discovery supports three goals highlighted in the proposal.</div></div></div>
+<div class="sdg-grid">
+<div class="sdg"><div class="num">04</div><h3>Quality Education</h3><p>Helps students find free and low-cost practical learning and skill-building opportunities that match their level.</p></div>
+<div class="sdg"><div class="num">10</div><h3>Reduced Inequalities</h3><p>Transparent eligibility, cost and beginner filters reduce reliance on personal networks.</p></div>
+<div class="sdg"><div class="num">13</div><h3>Climate Action</h3><p>Sustainability filters surface environmental and social-impact events and collaborators.</p></div>
+</div>
+</section>
+</main></div>
+<div id="toast" class="toast"></div>
+
+<script>
+const events=[
+{id:1,type:"Hackathon",title:"GreenTech Buildathon",org:"EcoFuture Labs",mode:"Remote",cost:"Free",deadline:"21 Oct 2026",skills:["Python","AI","Sustainability"],score:96,elig:"Pass",reason:"Strong match for your AI + sustainability interests; beginner-friendly and remote.",saved:true},
+{id:2,type:"Workshop",title:"Climate Data & AI Workshop",org:"Open Climate Network",mode:"Hybrid",cost:"Free",deadline:"14 Oct 2026",skills:["Data","Python","Climate"],score:92,elig:"Pass",reason:"Matches your data skills and preference for practical, impact-focused learning.",saved:false},
+{id:3,type:"Competition",title:"UN SDG Innovation Challenge",org:"Student Impact Hub",mode:"In-person",cost:"Free",deadline:"29 Oct 2026",skills:["Innovation","SDGs","Pitching"],score:87,elig:"Unknown",reason:"High relevance to SDG interests. Age eligibility is Not specified.",saved:true},
+{id:4,type:"Collaboration",title:"Open Source for Earth",org:"EarthCode Collective",mode:"Remote",cost:"Free",deadline:"Rolling",skills:["Git","JavaScript","Open Source"],score:84,elig:"Pass",reason:"Good skill overlap and flexible availability; useful for portfolio building.",saved:false},
+{id:5,type:"Hackathon",title:"Campus AI Challenge",org:"FutureLearn Campus",mode:"Hybrid",cost:"Paid",deadline:"03 Nov 2026",skills:["Java","ML","Product"],score:78,elig:"Pass",reason:"Relevant technical challenge, but cost lowers the overall match score.",saved:false},
+{id:6,type:"Workshop",title:"Designing for Social Impact",org:"Impact Design Studio",mode:"Remote",cost:"Free",deadline:"17 Oct 2026",skills:["UX","Research","Social Impact"],score:73,elig:"Unknown",reason:"Strong impact alignment; prior UX experience requirement is Not specified.",saved:false}
+];
+let saved=new Set(events.filter(e=>e.saved).map(e=>e.id));
+
+function card(e){
+return `<article class="card"><div class="cardtop"><div><div class="type">${e.type.toUpperCase()}</div><h3>${e.title}</h3><div class="org">${e.org}</div></div><div class="score">${e.score}%<small>MATCH</small></div></div>
+<div class="meta"><span>◷ ${e.deadline}</span><span>⌂ ${e.mode}</span><span>₹ ${e.cost}</span><span>✓ Eligibility: ${e.elig}</span></div>
+<div class="meta">${e.skills.map(s=>`<span>${s}</span>`).join("")}</div>
+<div class="reason">${e.reason}</div><div class="actions"><button class="btn primary" onclick="toast('Opened ${e.title}')">View opportunity</button><button class="btn ${saved.has(e.id)?'saved':''}" onclick="toggleSave(${e.id})">${saved.has(e.id)?'♥ Saved':'♡ Save'}</button></div></article>`;
+}
+function render(){
+let q=document.getElementById("search").value.toLowerCase(), type=document.getElementById("type").value, mode=document.getElementById("mode").value, cost=document.getElementById("cost").value;
+let list=events.filter(e=>(!q||(e.title+" "+e.org+" "+e.skills.join(" ")).toLowerCase().includes(q))&&(!type||e.type===type)&&(!mode||e.mode===mode)&&(!cost||e.cost===cost)).sort((a,b)=>b.score-a.score);
+document.getElementById("feed").innerHTML=list.length?list.map(card).join(""):`<div class="empty">No opportunities match those filters.</div>`;
+document.getElementById("eventCount").textContent=list.length;
+document.getElementById("savedFeed").innerHTML=events.filter(e=>saved.has(e.id)).map(card).join("")||`<div class="empty">Nothing saved yet.</div>`;
+}
+function toggleSave(id){saved.has(id)?saved.delete(id):saved.add(id);render();toast(saved.has(id)?"Opportunity saved":"Removed from saved");}
+function toast(msg){let t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));document.getElementById(b.dataset.page).classList.add("active");});
+["search","type","mode","cost"].forEach(id=>document.getElementById(id).addEventListener("input",render));
+render();
+</script>
+</body>
+</html>
