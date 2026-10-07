@@ -13,4 +13,3 @@ It includes:
 
 The event data is demo data; no real APIs or LLM calls are connected in this front-end prototype.
 The video of our website for inference:
-https://youtu.be/iTruDrOzTzI
